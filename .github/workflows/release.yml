@@ -28,10 +28,11 @@ jobs:
           token: ${{secrets.RELEASE_PLEASE_TOKEN}}
       - name: Print Release Data
         run: |
-          echo """
-          Release Data:
+          echo 'Release Data:'
+
+          echo '''
             ${{ toJSON(steps.release-please.outputs) }}
-          """
+          '''
 
   Deploy:
     needs: Process
