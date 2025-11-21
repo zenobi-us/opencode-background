@@ -19,21 +19,19 @@ jobs:
         with:
           release-type: node
           token: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - uses: actions/checkout@v4
         if: ${{ steps.release.outputs.release_created }}
-      
-      - uses: oven-sh/setup-bun@v1
-        if: ${{ steps.release.outputs.release_created }}
-        with:
-          bun-version: latest
-      
+
+      - uses: jdx/mise-action@v2
+
       - name: Publish to NPM
         if: ${{ steps.release.outputs.release_created }}
         run: |
+          mise use bun@latest
           npm install -g npm@latest
           npm ci
-          npm run build
+          mise tasks build
           npm publish --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}

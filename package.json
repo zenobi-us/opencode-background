@@ -1,15 +1,9 @@
 {
   "name": "@zenobius/opencode-background",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.1",
   "description": "Background Tasks Plugin for OpenCode",
   "type": "module",
   "module": "src/index.ts",
-  "scripts": {
-    "build": "bun build ./src/index.ts --outdir dist --target bun",
-    "test": "bun test",
-    "prepare": "bun run build",
-    "prepublishOnly": "npm run build"
-  },
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -26,6 +20,13 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.5",
-    "bun-types": "latest"
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1",
+    "bun-types": "latest",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.2.4",
+    "vitest": "^3.2.4"
   }
 }
