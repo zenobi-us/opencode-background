@@ -2,59 +2,84 @@
 
 A flexible background task management plugin for OpenCode.
 
+## Overview
+
+This plugin extends OpenCode's functionality by providing robust background task management capabilities. It allows you to:
+
+- Run long-running commands as background tasks
+- Track tasks across OpenCode sessions
+- Manage and filter tasks with advanced filtering
+- Kill tasks selectively or en masse
+
 ## Features
 
-- Create background tasks with real-time output tracking
-- Session-based task tracking
-- Task tagging
-- Advanced task filtering
-- Task killing with multiple criteria
+- 🚀 Create background tasks with real-time output tracking
+- 🏷️ Tag and categorize tasks
+- 🔍 Advanced task filtering
+- 🔪 Selective task termination
 
-## Installation
-
-```bash
-bun add @zenobius/opencode-background
-```
-
-## Usage
+## Usage in OpenCode
 
 ### Creating a Background Task
 
-```typescript
-const taskId = await client.background_tasks.createBackgroundTask({
-  command: "/path/to/long-running-script.sh",
-  name: "Long Running Task",
-  tags: ["long-task", "processing"]
-})
+```
+⚙ createBackgroundTask 
+  command=/tmp/long-task.sh 
+  name="Long Running Task" 
+  tags=["long-task", "processing"]
 ```
 
 ### Listing Tasks
 
-```typescript
-// List tasks in current session
-const currentSessionTasks = await client.background_tasks.listBackgroundTasks({
-  sessionId: currentSessionId
-})
+```
+# List tasks in current session
+⚙ listBackgroundTasks 
+  sessionId=current_session_id
 
-// List tasks with specific tags
-const processingTasks = await client.background_tasks.listBackgroundTasks({
-  tags: ["processing"]
-})
+# List tasks with specific tags
+⚙ listBackgroundTasks 
+  tags=["processing"]
 ```
 
 ### Killing Tasks
 
-```typescript
-// Kill a specific task
-await client.background_tasks.killTasks({
-  taskId: "specific-task-id"
-})
-
-// Kill all tasks in a session
-await client.background_tasks.killTasks({
-  sessionId: currentSessionId
-})
 ```
+# Kill a specific task
+⚙ killTasks 
+  taskId=specific-task-id
+
+# Kill all tasks in a session
+⚙ killTasks 
+  sessionId=current_session_id
+```
+
+## Plugin Methods
+
+### `createBackgroundTask`
+- `command`: Shell command to execute
+- `name` (optional): Descriptive name for the task
+- `tags` (optional): List of tags to categorize the task
+
+### `listBackgroundTasks`
+- `sessionId` (optional): Filter tasks by session
+- `status` (optional): Filter tasks by status
+- `tags` (optional): Filter tasks by tags
+
+### `killTasks`
+- `taskId` (optional): Kill a specific task
+- `sessionId` (optional): Kill tasks in a specific session
+- `status` (optional): Kill tasks with a specific status
+- `tags` (optional): Kill tasks with specific tags
+
+## Considerations
+
+- Tasks are tracked in-memory and reset between OpenCode sessions
+- Output is captured for the last 100 lines
+- Tasks can be in states: `pending`, `running`, `completed`, `failed`, `cancelled`
+
+## Contributing
+
+Contributions are welcome! Please file issues or submit pull requests on the GitHub repository.
 
 ## License
 
