@@ -1,4 +1,4 @@
-# AGENTS.md - Code Guidelines for OpenCode Background Tasks Plugin
+# AGENTS.md
 
 ## Build & Test Commands
 
