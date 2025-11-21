@@ -1,7 +1,7 @@
 name: 'LintPrTitle'
 
 on:
-  pull_request:
+  pull_request_target:
     types:
       - opened
       - edited
@@ -15,13 +15,3 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: amannn/action-semantic-pull-request@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          types: |
-            fix
-            feat
-            chore
-            docs
-            build
-            content

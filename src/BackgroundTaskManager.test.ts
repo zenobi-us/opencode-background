@@ -1,19 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { BackgroundProcessManager } from './BackgroundProcessManager';
-import { execa } from 'execa';
 import { EventEmitter } from 'events';
-
-// Define an interface to match the task structure
-interface TestTask {
-  id: string;
-  command: string;
-  name: string;
-  status: string;
-  sessionId: string;
-  tags: string[];
-  global?: boolean;
-  outputStream: string[];
-}
 
 // Custom MockSubprocess class to match the expected interface
 class MockSubprocess extends EventEmitter {
@@ -48,9 +35,9 @@ class MockSubprocess extends EventEmitter {
 
 // Mocking external dependencies
 vi.mock('execa', () => ({
-  execa: vi.fn((command, options) => {
+  execa: vi.fn(() => {
     const mockSubprocess = new MockSubprocess();
-    (mockSubprocess as any).kill = vi.fn();
+    (mockSubprocess as unknown as { kill: unknown }).kill = vi.fn();
     return mockSubprocess;
   }),
 }));
@@ -77,7 +64,6 @@ describe('BackgroundProcessManager', () => {
       });
 
       const task = JSON.parse(taskManager.getTask(taskId));
-      console.log('Full task object:', task);
 
       expect(task.global).toBe(true);
     });
@@ -89,7 +75,6 @@ describe('BackgroundProcessManager', () => {
       });
 
       const task = JSON.parse(taskManager.getTask(taskId));
-      console.log('Full task object (no global):', task);
 
       expect(task.global).toBe(false);
     });

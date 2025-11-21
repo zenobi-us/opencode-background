@@ -29,9 +29,6 @@ jobs:
           cache: true
           experimental: true
 
-      - name: Install Node Modules
-        uses: ./.github/actions/setup-yarn
-
       - name: lint
         run: mise run lint
 

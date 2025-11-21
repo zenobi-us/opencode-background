@@ -1,4 +1,4 @@
-# AGENTS.md - Code Guidelines for OpenCode Background Tasks Plugin
+# AGENTS.md
 
 ## Build & Test Commands
 
@@ -28,6 +28,7 @@
 
 ### TypeScript & Naming
 
+- **NeverNesters**: avoid deeply nested structures. Always exit early.
 - **Strict mode**: enforced (`"strict": true`)
 - **Classes**: PascalCase (e.g., `BackgroundTask`, `BackgroundTaskManager`)
 - **Methods/properties**: camelCase
@@ -44,7 +45,7 @@
 ### Linting Rules
 
 - `@typescript-eslint/no-explicit-any`: warn (avoid `any` type)
-- `no-console`: warn (minimize console logs)
+- `no-console`: error (minimize console logs)
 - `prettier/prettier`: error (formatting violations are errors)
 
 ## Testing
