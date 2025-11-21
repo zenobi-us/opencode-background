@@ -6,7 +6,7 @@ on:
       - main
 
 permissions:
-  contents: read
+  contents: write # Change read to write to allow creating releases
   id-token: write
   pull-requests: write
 
@@ -18,7 +18,7 @@ jobs:
         id: release
         with:
           release-type: node
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }} # Use a dedicated token with full repo access
 
       - uses: actions/checkout@v4
         if: ${{ steps.release.outputs.release_created }}
