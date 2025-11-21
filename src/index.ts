@@ -14,6 +14,7 @@ interface BackgroundTask {
   sessionId: string
   tags: string[]
   pid?: number
+  global?: boolean  // New flag to mark tasks that persist across sessions
 }
 
 export const BackgroundTasksPlugin: Plugin = async ({ project, client, $, directory, worktree }) => {
@@ -24,11 +25,12 @@ export const BackgroundTasksPlugin: Plugin = async ({ project, client, $, direct
     // Expose tools for task management
     tool: {
       createBackgroundTask: tool({
-        description: "Run a command as a background task with real-time output tracking, session tracking, and optional tags",
+        description: "Run a command as a background task with real-time output tracking, session tracking, optional tags, and global flag",
         args: {
           command: tool.schema.string(),
           name: tool.schema.string().optional(),
           tags: tool.schema.array(tool.schema.string()).optional(),
+          global: tool.schema.boolean().optional(),
         },
         async execute(args, ctx) {
           const taskId = crypto.randomUUID()
@@ -50,7 +52,8 @@ export const BackgroundTasksPlugin: Plugin = async ({ project, client, $, direct
             startedAt: new Date(),
             sessionId: sessionId,
             tags: args.tags || [],
-            pid: subprocess.pid
+            pid: subprocess.pid,
+            global: args.global || false
           }
 
           // Store the task
@@ -200,13 +203,13 @@ export const BackgroundTasksPlugin: Plugin = async ({ project, client, $, direct
       })
     },
     
-    // Optional: Hooks for session management
+    // Hooks for session and application management
     event: async ({ event }) => {
-      // Optionally clean up tasks when a session ends
+      // Clean up non-global tasks when a session ends
       if (event.type === 'session.deleted') {
         const sessionId = event.data.sessionId
         const tasksToRemove = Array.from(tasks.values())
-          .filter(task => task.sessionId === sessionId)
+          .filter(task => task.sessionId === sessionId && !task.global)
         
         tasksToRemove.forEach(task => {
           try {
@@ -215,6 +218,19 @@ export const BackgroundTasksPlugin: Plugin = async ({ project, client, $, direct
           } catch {}
           tasks.delete(task.id)
         })
+      }
+      
+      // Kill ALL tasks when OpenCode closes 
+      // Ensures no background processes are left running
+      if (event.type === 'server.disconnected') {
+        for (const task of tasks.values()) {
+          try {
+            // Attempt to kill the process, regardless of global flag
+            process.kill(task.pid || 0)
+          } catch {}
+        }
+        // Clear all tasks
+        tasks.clear()
       }
     }
   }

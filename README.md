@@ -59,6 +59,9 @@ This plugin extends OpenCode's functionality by providing robust background task
 - `command`: Shell command to execute
 - `name` (optional): Descriptive name for the task
 - `tags` (optional): List of tags to categorize the task
+- `global` (optional): Boolean to mark task as persisting across sessions
+  - `false` (default): Task is session-specific and will be terminated when the session ends
+  - `true`: Task continues to run across sessions until explicitly stopped
 
 ### `listBackgroundTasks`
 - `sessionId` (optional): Filter tasks by session
