@@ -1,12 +1,13 @@
+---
 name: Release
 
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
-  HUSKY: 0 # https://typicode.github.io/husky/how-to.html#ci-server-and-docker
+  HUSKY: 0 #  https://typicode.github.io/husky/how-to.html#ci-server-and-docker
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -16,7 +17,7 @@ permissions:
   contents: write
   deployments: write
   pull-requests: write
-  id-token: write # needed for npm oicd login
+  id-token: write #  needed for npm oidc login
 
 jobs:
   Process:
@@ -32,10 +33,7 @@ jobs:
       - name: Print Release Data
         run: |
           echo 'Release Data:'
-
-          echo '''
-            ${{ toJSON(steps.release-please.outputs) }}
-          '''
+          echo '${{ toJSON(steps.release-please.outputs) }}'
 
   Deploy:
     needs: Process
@@ -55,6 +53,7 @@ jobs:
         run: mise run build
 
       - if: ${{ needs.Process.outputs.releases_created == 'true' }}
+        name: Publish release
         run: mise run publish --tag latest
 
       - if: ${{ needs.Process.outputs.prs_created == 'true' }}
