@@ -58,9 +58,7 @@ jobs:
         run: mise run publish --tag latest
 
       - if: ${{ needs.Process.outputs.prs_created == 'true' }}
-        run: yarn version apply --prerelease
-
-      - if: ${{ needs.Process.outputs.prs_created == 'true' }}
         name: Generate prerelease version and publish
         run: |
+          bun pm version prerelease && git push origin main
           mise run publish --tag next
