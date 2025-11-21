@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# mise description="Validate package.json has no scripts property"
+#MISE description="Validate package.json has no scripts property"
 
 set -e
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# mise description="Setting up project"
+#MISE description="Setting up project"
 
 echo ""
 echo "🍜 Setting up project"
