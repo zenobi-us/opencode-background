@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.5",
-    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/eslint-plugin": "^8.47.0",
     "@typescript-eslint/parser": "^6.19.1",
     "bun-types": "latest",
     "eslint": "^8.56.0",
