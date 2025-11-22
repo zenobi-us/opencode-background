@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0-alpha.2](https://github.com/zenobi-us/opencode-background/compare/v0.1.0-alpha.2...v0.2.0-alpha.2) (2025-11-22)
+
+
+### Features
+
+* implement OIDC-based npm publishing with separate release and publish workflows ([da47216](https://github.com/zenobi-us/opencode-background/commit/da47216668406900c442a02983c1e571cd0b1c06))
+
+
+### Bug Fixes
+
+* add missing repository field to package.json and version management task ([a82459a](https://github.com/zenobi-us/opencode-background/commit/a82459a04ebf57011679c29a854213e5e9113af0))
+
 ## [0.1.0-alpha.2](https://github.com/zenobi-us/opencode-background/compare/v0.1.0-alpha.1...v0.1.0-alpha.2) (2025-11-21)
 
 
