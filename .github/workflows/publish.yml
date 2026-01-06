@@ -30,7 +30,9 @@ jobs:
           experimental: true
 
       - name: Build
-        run: mise run build
+        run: |
+          npm install
+          mise run build
 
       - id: inputs
         uses: simenandre/setup-inputs@v1
